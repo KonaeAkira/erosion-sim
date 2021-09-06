@@ -22,7 +22,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += include/display.hpp include/heightmap.hpp include/tile.hpp include/gradient.hpp
-SOURCES += main.cpp src/display.cpp src/heightmap.cpp src/tile.cpp src/gradient.cpp
+HEADERS += include/main_window.hpp include/simulation.hpp include/tile.hpp include/colors.hpp
+SOURCES += main.cpp src/main_window.cpp src/simulation.cpp src/tile.cpp src/colors.cpp
 
 QT += widgets gui

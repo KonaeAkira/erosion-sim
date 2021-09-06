@@ -1,12 +1,12 @@
 #include <QApplication>
 
-#include "display.hpp"
+#include "main_window.hpp"
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);  
+    QApplication app(argc, argv);
 
-    Display display;
+    MainWindow window;
 
     return app.exec();
 }

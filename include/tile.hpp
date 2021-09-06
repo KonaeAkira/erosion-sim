@@ -1,7 +1,8 @@
 #ifndef TILE_HPP
 #define TILE_HPP
 
-#include <vector>
+#include <algorithm>
+#include <numeric>
 
 class Tile
 {
@@ -13,9 +14,10 @@ class Tile
         double getWaterHeight() const;
         void calculateFlow();
         void doFlow();
+        void doPrecipitation(const double precipitation);
 
     private:
-        double water, height, buffer;
+        double height, water, buffer;
         Tile *neighbors[4];
 };
 

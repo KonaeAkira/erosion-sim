@@ -1,15 +1,10 @@
-#include <cassert>
-#include <algorithm>
-#include <numeric>
-#include <iostream>
-
 #include "tile.hpp"
 
 Tile::Tile() {}
 
 Tile::Tile(double height, Tile *n, Tile *e, Tile *s, Tile *w) :
-    water(0.01),
     height(height),
+    water(std::max(0.0, 0.3200 - height)),
     buffer()
 {
     neighbors[0] = n;
@@ -18,20 +13,9 @@ Tile::Tile(double height, Tile *n, Tile *e, Tile *s, Tile *w) :
     neighbors[3] = w;
 }
 
-double Tile::getTotalHeight() const
-{
-    return height + water;
-}
-
-double Tile::getTerrainHeight() const
-{
-    return height;
-}
-
-double Tile::getWaterHeight() const
-{
-    return water;
-}
+double Tile::getTotalHeight() const { return height + water; }
+double Tile::getTerrainHeight() const { return height; }
+double Tile::getWaterHeight() const { return water; }
 
 void Tile::calculateFlow()
 {
@@ -53,8 +37,12 @@ void Tile::calculateFlow()
 
 void Tile::doFlow()
 {
-    water += buffer;
-    assert(water > -1e-9);
+    water += buffer - 1e-6;
     water = std::max(0.0, water);
     buffer = 0;
+}
+
+void Tile::doPrecipitation(const double precipitation)
+{
+    water += 1e-5 * precipitation;
 }
