@@ -35,9 +35,9 @@ QColor Colors::topographic(const double height, const double water)
         std::make_pair(0.9655, QColor::fromRgb(245,244,242))
     };
 
-    if (height >= 0.3103 && water >= 1e-3)
+    if (height >= 0.3448 && water >= 1e-3)
         return QColor::fromRgb(216,242,254);
-    else if (height < 0.3103 && water < 1e-3)
+    else if (height < 0.3448 && water < 1e-3)
         return QColor::fromRgb(172,208,165);
 
     int i = sizeof(ramp) / sizeof(ramp[0]) - 1;

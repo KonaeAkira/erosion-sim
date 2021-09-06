@@ -2,7 +2,7 @@
 
 Simulation::Simulation(QWidget *parent) :
     QWidget(parent),
-    perlin(time(nullptr)),
+    perlin(123),
     topographic_map(MAP_SIZE, MAP_SIZE, QImage::Format_RGB32),
     precipitation_map(MAP_SIZE, MAP_SIZE, QImage::Format_RGB32),
     iteration(0)
@@ -78,11 +78,15 @@ void Simulation::simulateStep()
 
     for (int i = 0; i < MAP_SIZE; ++i)
         for (int j = 0; j < MAP_SIZE; ++j)
-            terrain[i][j].doFlow();
+            terrain[i][j].calculateErosion();
 
     for (int i = 0; i < MAP_SIZE; ++i)
         for (int j = 0; j < MAP_SIZE; ++j)
-            terrain[i][j].doPrecipitation(getPrecipitation(i, j));
+            terrain[i][j].doErosion();
+
+    for (int i = 0; i < MAP_SIZE; ++i)
+        for (int j = 0; j < MAP_SIZE; ++j)
+            terrain[i][j].addWater(getPrecipitation(i, j) * 1e-5);
 
     updateImages();
     ++iteration;
