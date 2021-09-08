@@ -5,7 +5,7 @@ Tile::Tile() {}
 Tile::Tile(double height, Tile *n, Tile *e, Tile *s, Tile *w) :
     height(height),
     // water(0.0),
-    water(std::max(0.0, 0.3200 - height)),
+    water(std::max(0.0, 0.3400 - height)),
     sediment(0.0),
     height_buffer(0.0)
 {
@@ -66,38 +66,38 @@ void Tile::calculateErosion()
     }
 
     // force-based erosion
-    double fx = 0.0, fy = 0.0;
-    if (neighbors[0] != nullptr) fy += neighbors[0]->water_out[2];
-    if (neighbors[1] != nullptr) fx -= neighbors[1]->water_out[3];
-    if (neighbors[2] != nullptr) fy -= neighbors[2]->water_out[0];
-    if (neighbors[3] != nullptr) fx += neighbors[3]->water_out[1];
+    // double fx = 0.0, fy = 0.0;
+    // if (neighbors[0] != nullptr) fy += neighbors[0]->water_out[2];
+    // if (neighbors[1] != nullptr) fx -= neighbors[1]->water_out[3];
+    // if (neighbors[2] != nullptr) fy -= neighbors[2]->water_out[0];
+    // if (neighbors[3] != nullptr) fx += neighbors[3]->water_out[1];
 
-    const double force_c = 10;
+    // const double force_c = 10;
 
-    if (fx > 0 && neighbors[1] != nullptr && getTotalHeight() < neighbors[1]->getTerrainHeight())
-    {
-        const double t = std::min((neighbors[1]->getTerrainHeight() - getTotalHeight()) / 4, fx * force_c);
-        sediment += t;
-        neighbors[1]->height_buffer -= t;
-    }
-    if (fy > 0 && neighbors[2] != nullptr && getTotalHeight() < neighbors[2]->getTerrainHeight())
-    {
-        const double t = std::min((neighbors[2]->getTerrainHeight() - getTotalHeight()) / 4, fy * force_c);
-        sediment += t;
-        neighbors[2]->height_buffer -= t;
-    }
-    if (fx < 0 && neighbors[3] != nullptr && getTotalHeight() < neighbors[3]->getTerrainHeight())
-    {
-        const double t = std::min((neighbors[3]->getTerrainHeight() - getTotalHeight()) / 4, (-fx) * force_c);
-        sediment += t;
-        neighbors[3]->height_buffer -= t;
-    }
-    if (fy < 0 && neighbors[0] != nullptr && getTotalHeight() < neighbors[0]->getTerrainHeight())
-    {
-        const double t = std::min((neighbors[0]->getTerrainHeight() - getTotalHeight()) / 4, (-fy) * force_c);
-        sediment += t;
-        neighbors[0]->height_buffer -= t;
-    }
+    // if (fx > 0 && neighbors[1] != nullptr && getTotalHeight() < neighbors[1]->getTerrainHeight())
+    // {
+    //     const double t = std::min((neighbors[1]->getTerrainHeight() - getTotalHeight()) / 4, fx * force_c);
+    //     sediment += t;
+    //     neighbors[1]->height_buffer -= t;
+    // }
+    // if (fy > 0 && neighbors[2] != nullptr && getTotalHeight() < neighbors[2]->getTerrainHeight())
+    // {
+    //     const double t = std::min((neighbors[2]->getTerrainHeight() - getTotalHeight()) / 4, fy * force_c);
+    //     sediment += t;
+    //     neighbors[2]->height_buffer -= t;
+    // }
+    // if (fx < 0 && neighbors[3] != nullptr && getTotalHeight() < neighbors[3]->getTerrainHeight())
+    // {
+    //     const double t = std::min((neighbors[3]->getTerrainHeight() - getTotalHeight()) / 4, (-fx) * force_c);
+    //     sediment += t;
+    //     neighbors[3]->height_buffer -= t;
+    // }
+    // if (fy < 0 && neighbors[0] != nullptr && getTotalHeight() < neighbors[0]->getTerrainHeight())
+    // {
+    //     const double t = std::min((neighbors[0]->getTerrainHeight() - getTotalHeight()) / 4, (-fy) * force_c);
+    //     sediment += t;
+    //     neighbors[0]->height_buffer -= t;
+    // }
 
     // dissolution-based erosion
     if (water > 0)
@@ -106,8 +106,8 @@ void Tile::calculateErosion()
         for (int i = 0; i < 4; ++i)
             if (neighbors[i] != nullptr)
                 f += neighbors[i]->water_out[(i + 2) & 0b11];
-        f /= std::max(1e-3, water);
-        const double t = f * 1e-5;
+        // f /= std::max(1e-3, water);
+        const double t = f * 1e-2;
         sediment += t;
         height_buffer -= t;
     }

@@ -86,7 +86,7 @@ void Simulation::simulateStep()
 
     for (int i = 0; i < MAP_SIZE; ++i)
         for (int j = 0; j < MAP_SIZE; ++j)
-            terrain[i][j].addWater(getPrecipitation(i, j) * 1e-5);
+            terrain[i][j].addWater(getPrecipitation(i, j) * 6e-6);
 
     updateImages();
     ++iteration;
